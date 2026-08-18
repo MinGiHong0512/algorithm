@@ -3,6 +3,10 @@ def solution(message, spoiler_ranges):
 
     word_list = [item for item in message.split()]
 
+    spoiler_word = []
+
+    bool_list = [False for _ in range(len(message.split()))]
+
     word_len_list = [[0 for _ in range(2)] for _ in range(len(word_list))]
 
     for i in range(len(word_list)):
@@ -13,7 +17,21 @@ def solution(message, spoiler_ranges):
         
         word_len_list[i][1] = word_len_list[i][0] + len(word_list[i]) - 1
 
-    print(word_len_list)
+    for i in range(len(word_len_list)):
+        for j in spoiler_ranges:
+            if j[0] <= word_len_list[i][0] and word_len_list[i][1] <= j[1]:
+                bool_list[i] = True
+                spoiler_word.append(word_list[i])
+                break
+
+    
+
+    for i in range(len(word_list)):
+        if not bool_list[i]:
+            for sp_word in spoiler_word:
+                if word_list[i] == sp_word:
+                    break
+            answer += 1
 
     return answer
 
@@ -25,11 +43,10 @@ arr = list(map(int, input().split()))
 spoiler_ranges = []
 
 for i in range(len(arr)//2):
+    temp_list = []
     for j in range(2):
-        temp_list = []
         temp_list.append(arr[i*2+j])
     
     spoiler_ranges.append(temp_list)
-
 
 print(solution(message, spoiler_ranges))
