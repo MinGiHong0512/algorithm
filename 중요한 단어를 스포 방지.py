@@ -3,15 +3,17 @@ def solution(message, spoiler_ranges):
 
     word_list = [item for item in message.split()]
 
-    spoiler_word = []
+    spoiler_word = set()
 
     bool_list = [False for _ in range(len(message.split()))]
 
     word_len_list = [[0 for _ in range(2)] for _ in range(len(word_list))]
 
+    start_index = 1 if(message[0]==' ') else 0  
+
     for i in range(len(word_list)):
         if i == 0:
-            word_len_list[i][0] = i
+            word_len_list[i][0] = i + start_index
         else: 
             word_len_list[i][0] = word_len_list[i-1][1] + 2
         
@@ -19,19 +21,17 @@ def solution(message, spoiler_ranges):
 
     for i in range(len(word_len_list)):
         for j in spoiler_ranges:
-            if j[0] <= word_len_list[i][0] and word_len_list[i][1] <= j[1]:
+            if word_len_list[i][0] <= j[1] and j[0] <= word_len_list[i][1]: 
                 bool_list[i] = True
-                spoiler_word.append(word_list[i])
+                spoiler_word.add(word_list[i])
                 break
 
-    
+    for i in range(len(bool_list)):
+        if bool_list[i] == False:
+           if word_list[i] in spoiler_word:
+                spoiler_word.discard(word_list[i])
 
-    for i in range(len(word_list)):
-        if not bool_list[i]:
-            for sp_word in spoiler_word:
-                if word_list[i] == sp_word:
-                    break
-            answer += 1
+    answer = len(spoiler_word)
 
     return answer
 
