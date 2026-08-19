@@ -12,9 +12,7 @@ def solution(n):
 
         hanoi(depth-1, mid , start, end)
 
-
     hanoi(n, 1,2,3)
-
 
     return answer
 
