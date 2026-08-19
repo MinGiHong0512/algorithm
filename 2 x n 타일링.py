@@ -8,11 +8,11 @@ def solution(n):
 
     if n >= 2:
         for i in range(2, n+1):
-            dp[i] = dp[i-1] + dp[i-2]
+            dp[i] = (dp[i-1] + dp[i-2]) % 1_000_000_007
 
     answer = dp[n-1]
 
-    return answer % 1_000_000_007
+    return answer 
 
 
 n = int(input())
