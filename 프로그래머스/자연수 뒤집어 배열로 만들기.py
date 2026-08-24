@@ -5,7 +5,6 @@ def solution(n):
 
     while n > 0:
         answer.append(n%10)
-        print(n)
         n //= 10
 
     return answer
