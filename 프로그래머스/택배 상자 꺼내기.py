@@ -10,8 +10,6 @@ def solution(n, w, num):
     dir_top = n // w
     dir_bottom = num // w
 
-    print(dir_top, dir_bottom)
-
     answer = dir_top - dir_bottom
 
     if dir_top % 2 == dir_bottom % 2:
