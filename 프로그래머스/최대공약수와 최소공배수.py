@@ -12,7 +12,8 @@ def solution(n, m):
 
     while n != 0:
         n,m = m % n, n
-    GCD = n
+
+    GCD = m
 
     LCM = (N * M) // GCD
 
