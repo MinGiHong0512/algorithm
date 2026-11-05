@@ -1,0 +1,160 @@
+class Solution {
+    public String[] solution(String[] expressions) {
+        
+        int[] nw = new int[10];
+        int count = 0;
+        
+        for(int i = 0; i < 10; i++){
+            if(i < 2){
+                nw[i] = -1;
+            }else{
+                nw[i] = 0;
+            }
+        }
+        
+        for(int i = 0; i < expressions.length; i++){
+            String[] items = expressions[i].split(" ");
+            
+            if(items[4].equals("X")){
+                count+= 1;
+            }
+            
+            for(int j = 0; j < 10; j++){
+                if(nw[j] != -1){
+                    nw[j] = checkN(items[0],items[2],items[4],items[1],j);                
+                }
+            }
+        }
+    
+        String[] answer = new String[count];
+        int index = 0;
+        
+        for(int i = 0; i < expressions.length; i++){
+            String[] items = expressions[i].split(" ");
+            
+            int before = -9999;
+            
+            if(items[4].equals("X")){
+                for(int j = 0; j < 10; j++){
+                    if(nw[j] != -1){
+                        if(before == -9999){
+                            System.out.println(checkResult(items[0],items[2],items[1],j));
+                            before = checkResult(items[0],items[2],items[1],j);
+                        }else if(before != checkResult(items[0],items[2],items[1],j)){
+                            before = -9999;
+                            break;
+                        }
+                        before = checkResult(items[0],items[2],items[1],j);
+                    }
+                }
+                StringBuilder sb = new StringBuilder();
+                sb.append(items[0]+" "+items[1]+" "+items[2]+" = ");
+            
+                if(before == -9999){
+                    sb.append("?");
+                }else{
+                    sb.append(before+"");
+                }
+                answer[index++] = sb.toString();
+            }
+          
+        }
+        
+        return answer;
+    }
+    
+    public int checkResult(String n1, String n2, String mp, int n){
+        int in1 = cn(Integer.parseInt(n1),n);
+        int in2 = cn(Integer.parseInt(n2),n);
+        
+        int sum = nsum(in1, in2, mp);
+        
+        return ct(sum,n);
+    }
+    
+    public int checkN(String n1, String n2, String n3, String mp, int n){
+        int in1 = cn(Integer.parseInt(n1),n);
+        int in2 = cn(Integer.parseInt(n2),n);
+        int in3 = 0;
+        
+        if(!n3.equals("X")){
+            in3 = cn(Integer.parseInt(n3),n);
+        }
+
+        if(in1 == -1 || in2 == -1 || in3 == -1){
+            return -1;
+        }
+        
+        int sum = nsum(in1, in2, mp);
+        
+        if(sum < 0){
+            return -1;
+        }
+        
+        if(!n3.equals("X") && sum != in3){
+            return -1;
+        }
+        
+        
+        return 1;
+    }
+    
+    //n진수인 n1과 n2의 10진수로 변환후 값을 출력해줌
+    public int nsum(int n1, int n2 , String mp){     
+        if(mp.equals("-")){
+            n2 *= -1;
+        }
+        return n1 + n2;
+    }
+    
+    
+    //어떤 수 a를 n진수로 변환 시켜주는 메서드
+    public int cn(int a, int n){
+        int value = 0;
+        
+        int temp = 0;
+        
+        if(a == 0) return 0;
+        
+        while(a > 0){
+            int pow = 1;
+            for(int i = 0; i < temp; i++){
+                pow *= n;
+            }
+            
+            //만약 포함된 숫자가 n보다 크다면 n진수가 불가능하므로 -1
+            if(a % 10 >= n){
+                return -1;
+            }
+            
+            value += a % 10 * pow ;
+            a /= 10;
+            temp += 1;
+        }
+        return value;
+    }
+    
+    public int ct(int a, int n){
+        StringBuilder sb = new StringBuilder();
+        
+        if(a == 0) return 0;
+        
+        while(a > 0){
+            sb.append(a%n);
+            a /= n;
+        }
+        
+        int temp = 0;
+        
+        for(int i = 0; i < sb.length(); i++){
+            int pow = 1;
+            for(int j = 0; j < i; j++){
+                pow *= 10;
+            }
+            
+            temp += (sb.charAt(i) - '0') * pow;
+            
+        }
+        return temp;
+    }
+}
