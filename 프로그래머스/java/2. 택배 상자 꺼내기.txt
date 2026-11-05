@@ -1,0 +1,28 @@
+class Solution {
+    public int solution(int n, int w, int num) {
+        int answer = 0;
+        
+        n -= 1;
+        num -= 1;
+        
+        answer = n / w  - num / w;
+        
+        System.out.println(answer);
+        
+        if(n / w % 2 == num / w % 2){
+            if(n%w >= num % w){
+                answer += 1;
+            }
+        }else{
+            //5 4 3 2 1 0
+            //0 1 2 3 4 5
+            //5 4 3 2 1 0
+            if(num % w + n % w >= w - 1){
+                answer += 1;
+            }
+        }
+        
+        
+        return answer;
+    }
+}

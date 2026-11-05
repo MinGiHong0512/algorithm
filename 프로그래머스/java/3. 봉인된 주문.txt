@@ -1,0 +1,53 @@
+import java.util.*;
+
+class Solution {
+    public String solution(long n, String[] bans) {
+        String answer = "";
+        
+        StringBuilder sb = new StringBuilder();
+        
+        ArrayList<Long> al = new ArrayList<>();
+        ArrayList<Long> bansNumber = new ArrayList<>();
+        
+        for(int i = 0; i < bans.length; i++){
+            long item = 0;
+            long temp = 0;
+            
+            for(int j = 0; j < bans[i].length(); j++){
+                long pow = 1;
+                for(int k = 0; k < j; k++){
+                    pow *= 26;
+                }
+                item += (bans[i].charAt(bans[i].length() - 1 - j) - 'a'+1) * pow;    
+            }             
+    
+            bansNumber.add(item);
+        }
+        
+        Collections.sort(bansNumber);
+        
+        for(var item : bansNumber){
+            if(item <= n){
+                n += 1;
+            }
+        }
+        
+        
+        while(n > 0){
+            
+            n -= 1;
+            
+            al.add(n % 26);
+                        
+            n /= 26;
+        }
+                
+        for(int i = al.size()-1; i >= 0; i--){
+            sb.append(String.valueOf((char)(al.get(i) + 'a')));
+        }
+        
+        answer = sb.toString();
+        
+        return answer;
+    }
+}
