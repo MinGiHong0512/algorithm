@@ -1,0 +1,37 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		
+		long target = scan.nextLong();
+		long start = scan.nextLong();
+		
+		int count = 1;
+		
+		while(true) {
+			
+			if(start == target) {
+				System.out.println(count);
+				break;
+			}
+			if(start < target) {
+				System.out.println(-1);
+				break;
+			}
+			
+			if(start % 2 == 0) {
+				start /= 2;
+			}else if(start % 10 == 1){
+				start /= 10;
+			}else {
+				System.out.println(-1);
+				break;
+			}
+			count += 1;
+		}
+	}
+}
