@@ -1,0 +1,35 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+
+		int n = scan.nextInt();
+		
+		ArrayList<Integer> A = new ArrayList<>();
+		ArrayList<Integer> B = new ArrayList<>();
+		
+		for(int i = 0; i < n; i++) {
+			A.add(scan.nextInt());
+		}
+		
+		for(int i = 0; i < n; i++) {
+			B.add(scan.nextInt());
+		}
+		
+		Collections.sort(A);
+		Collections.sort(B);
+		Collections.reverse(B);
+		
+		int total = 0;
+		
+		for(int i = 0 ; i < n; i++) {
+			total += A.get(i) * B.get(i);
+		}
+		
+		System.out.println(total);
+	}
+}
