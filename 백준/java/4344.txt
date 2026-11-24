@@ -1,0 +1,37 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		
+		int n = scan.nextInt();
+		
+		for(int i = 0; i < n; i++) {
+			int nn = scan.nextInt();
+			
+			int total = 0;
+			
+			int[] arr = new int[nn];
+			
+			for(int j = 0; j < nn; j++) {
+				arr[j] = scan.nextInt();
+				total += arr[j];
+			}
+			
+			double avg = total * 1.0 / nn;
+			
+			int count = 0;
+			
+			for(int j = 0; j < nn; j++) {
+				if(avg < arr[j]) {
+					count += 1;
+				}
+			}
+			
+			System.out.println(String.format("%.3f%%", count*1.0/nn*100));
+		}
+	}
+}
