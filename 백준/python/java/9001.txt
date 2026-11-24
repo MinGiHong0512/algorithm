@@ -1,0 +1,71 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		
+		
+		int n = scan.nextInt();
+	
+		int[] answer = new int[n];
+		
+		int  max = 0;
+		
+		for(int i = 0; i < n; i++) {
+			int item = scan.nextInt();
+			
+			if(item > max) {
+				max = item;
+			}
+			
+			answer[i] = item;
+		}
+		
+		
+		ArrayList<Integer> fib = new ArrayList<>();
+	
+		fib.add(0, 0);
+		fib.add(1, 1);
+		
+		int index = 2;
+		
+		while(true) {
+			if(fib.get(index-1) > max) {
+				break;
+			}
+			
+			fib.add(index, fib.get(index-1) + fib.get(index-2));
+			
+			index += 1;
+		}
+		
+		for(int i = 0; i < n; i++) {
+			
+			int item = answer[i];
+			
+			ArrayList<Integer> tempList = new ArrayList<Integer>();
+			
+			for(int j = fib.size() -1 ; j > 0; j--) {
+				if(item - fib.get(j) >= 0) {
+					item -= fib.get(j);
+					tempList.add(fib.get(j));
+				}
+			}
+			
+			Collections.sort(tempList);
+			
+			for (var listItem : tempList) {
+				System.out.print(listItem+" ");
+			}
+			System.out.println();
+			
+		}
+		
+		
+	}
+	
+	
+}
